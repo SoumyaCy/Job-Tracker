@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
 require("express-async-errors");
+const morgan = require("morgan");
 //routers
 const authRouter = require("./routers/authRouters");
 const jobsRouter = require("./routers/jobRouters");
@@ -14,6 +15,9 @@ const { connectDB } = require("./db/connect");
 const { errorHandlerMiddleware } = require("./middleware/error-handler");
 const { notFoundMiddleware } = require("./middleware/not-found");
 
+if (process.env.NODE_ENV !== "production") {
+  app.use(morgan("dev"));
+}
 app.use(express.json());
 
 app.get("/", (req, res) => {
