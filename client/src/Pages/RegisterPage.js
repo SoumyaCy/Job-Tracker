@@ -17,7 +17,7 @@ export const RegisterPage = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
 
-  const { user, showAlert, displayAlert, registerUser, isLoading } =
+  const { user, showAlert, displayAlert, registerUser, loginUser, isLoading } =
     useAppContext();
 
   const handleChange = (e) => {
@@ -35,7 +35,7 @@ export const RegisterPage = () => {
     const currentUser = { name, email, password };
 
     if (isMember) {
-      console.log("already a member");
+      loginUser(currentUser);
     } else {
       registerUser(currentUser);
     }

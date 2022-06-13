@@ -4,7 +4,7 @@ const { CustomAPIError } = require("./Custom-api-error");
 class UnAuthenticatedError extends CustomAPIError {
   constructor(message) {
     super(message);
-    this.statusCode = StatusCodes.UNAUTHORIZED;
+    this.statusCodes = StatusCodes.UNAUTHORIZED;
   }
 }
-module.exports = UnAuthenticatedError;
+module.exports = { UnAuthenticatedError };

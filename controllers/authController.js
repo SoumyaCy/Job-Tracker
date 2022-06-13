@@ -18,20 +18,20 @@ const loginUser = async (req, res) => {
   if (!email || !password) {
     throw new BadRequestError("Please provide all the values");
   }
-  const user = await User.findOne({ email }).select("+password");
-  if (!user) {
+  const newUser = await User.findOne({ email }).select("+password");
+  if (!newUser) {
     throw new UnAuthenticatedError("no user found with the given email");
   }
-  const isPasswordCorrect = await user.comparePassword(password);
+  const isPasswordCorrect = await newUser.comparePassword(password);
   if (!isPasswordCorrect) {
     throw new UnAuthenticatedError(
       "the email or password entered is incorrect"
     );
   }
   // console.log(user);
-  const token = user.createJWT();
-  user.password = undefined;
-  res.status(StatusCodes.OK).json({ user, token });
+  const token = newUser.createJWT();
+  newUser.password = undefined;
+  res.status(StatusCodes.OK).json({ newUser, token });
 };
 const updateUser = (req, res) => {
   res.send("user updated");

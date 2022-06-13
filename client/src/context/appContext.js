@@ -6,6 +6,9 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  LOGIN_USER_BEGIN,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
 } from "./actions";
 import { reducer } from "./reducer";
 
@@ -42,6 +45,7 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem("location");
   };
 
+  //REGISTER USER
   const registerUser = async (currentUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
@@ -67,6 +71,34 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
+  //LOGIN USER
+  const loginUser = async (currentUser) => {
+    dispatch({ type: LOGIN_USER_BEGIN });
+    try {
+      const response = await axios.post("/api/v1/auth/login", currentUser);
+      console.log(response);
+      const { newUser, token } = response.data;
+      const { location } = newUser;
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: {
+          newUser,
+          token,
+          location,
+        },
+      });
+      addItemToLocalStorage({ newUser, token, location });
+    } catch (error) {
+      console.log(error.response);
+      dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   const clearAlert = () => {
     setTimeout(() => {
       hideAlert();
@@ -89,6 +121,7 @@ const AppProvider = ({ children }) => {
         ...state,
         displayAlert,
         registerUser,
+        loginUser,
         removeItemFromLocalStorage,
       }}
     >
