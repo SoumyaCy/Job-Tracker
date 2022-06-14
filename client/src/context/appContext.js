@@ -9,6 +9,8 @@ import {
   LOGIN_USER_BEGIN,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
+  TOGGLE_SIDEBAR,
+  LOGOUT_USER,
 } from "./actions";
 import { reducer } from "./reducer";
 
@@ -26,6 +28,7 @@ const initialState = {
   token: token,
   userLocation: location ? location : "",
   jobLocation: location ? location : "",
+  showSidebar: false,
 };
 
 const AppContext = React.createContext();
@@ -39,7 +42,7 @@ const AppProvider = ({ children }) => {
     localStorage.setItem("token", token);
     localStorage.setItem("location", location);
   };
-  const removeItemFromLocalStorage = ({ user, token, location }) => {
+  const removeItemFromLocalStorage = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("location");
@@ -99,6 +102,18 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  //TOGGLE SIDEBAR
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
+
+  //LOGOUT USER
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER });
+    removeItemFromLocalStorage();
+  };
+
+  //ALERTS
   const clearAlert = () => {
     setTimeout(() => {
       hideAlert();
@@ -123,6 +138,8 @@ const AppProvider = ({ children }) => {
         registerUser,
         loginUser,
         removeItemFromLocalStorage,
+        toggleSidebar,
+        logoutUser,
       }}
     >
       {children}
