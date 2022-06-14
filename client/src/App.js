@@ -13,11 +13,11 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <nav>
+        {/* <nav>
           <Link to="/">Dashboard</Link>
           <Link to="/landing">landing</Link>
           <Link to="/register">Register</Link>
-        </nav>
+        </nav> */}
         <Routes>
           <Route
             path="/"
