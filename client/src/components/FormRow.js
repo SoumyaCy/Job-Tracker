@@ -4,7 +4,7 @@ export const FormRow = ({ type, name, onChange, labelText, value }) => {
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">
-        {labelText}
+        {labelText || name}
       </label>
       <input
         placeholder={name}

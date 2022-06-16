@@ -113,6 +113,11 @@ const AppProvider = ({ children }) => {
     removeItemFromLocalStorage();
   };
 
+  //UPDATE USER
+  const updateUser = async (currentUser) => {
+    console.log(currentUser);
+  };
+
   //ALERTS
   const clearAlert = () => {
     setTimeout(() => {
@@ -140,6 +145,7 @@ const AppProvider = ({ children }) => {
         removeItemFromLocalStorage,
         toggleSidebar,
         logoutUser,
+        updateUser,
       }}
     >
       {children}
