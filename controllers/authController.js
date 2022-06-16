@@ -34,15 +34,15 @@ const loginUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ newUser, token });
 };
 const updateUser = async (req, res) => {
-  const { email, lastName, location, name } = req.body;
-  if (!email || !lastName || !location || !name) {
+  const { email, lastname, location, name } = req.body;
+  if (!email || !lastname || !location || !name) {
     throw new BadRequestError("Please provide all values");
   }
   const newUser = await User.findOne({ _id: req.user.userId });
   // console.log(newUser);
 
   newUser.email = email;
-  newUser.lastname = lastName;
+  newUser.lastname = lastname;
   newUser.location = location;
   newUser.name = name;
 
