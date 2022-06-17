@@ -11,6 +11,9 @@ import {
   LOGIN_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from "./actions";
 import { reducer } from "./reducer";
 
@@ -59,9 +62,9 @@ const AppProvider = ({ children }) => {
       return response;
     },
     (error) => {
-      console.log(error.response);
+      // console.log(error.response);
       if (error.response.status === 401) {
-        console.log("AUTH ERROR");
+        logoutUser();
       }
       return Promise.reject(error);
     }
@@ -84,7 +87,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
       const response = await axios.post("/api/v1/auth/register", currentUser);
-      console.log(response);
+      // console.log(response);
       const { newUser, token } = response.data;
       const { location } = newUser;
       dispatch({
@@ -97,7 +100,7 @@ const AppProvider = ({ children }) => {
       });
       addItemToLocalStorage({ newUser, token, location });
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
       dispatch({
         type: REGISTER_USER_ERROR,
         payload: { msg: error.response.data.msg },
@@ -111,7 +114,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
       const response = await axios.post("/api/v1/auth/login", currentUser);
-      console.log(response);
+      // console.log(response);
       const { newUser, token } = response.data;
       const { location } = newUser;
       dispatch({
@@ -124,7 +127,7 @@ const AppProvider = ({ children }) => {
       });
       addItemToLocalStorage({ newUser, token, location });
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
       dispatch({
         type: LOGIN_USER_ERROR,
         payload: { msg: error.response.data.msg },
@@ -146,10 +149,23 @@ const AppProvider = ({ children }) => {
 
   //UPDATE USER
   const updateUser = async (currentUser) => {
+    dispatch({ type: UPDATE_USER_BEGIN });
     try {
       const { data } = await authFetch.patch("/auth/Update", currentUser);
-      console.log(data);
-    } catch (error) {}
+      const { newUser, token } = data;
+      const { location } = newUser;
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: { newUser, token, location },
+      });
+      addItemToLocalStorage({ newUser, token, location });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
   };
 
   //ALERTS

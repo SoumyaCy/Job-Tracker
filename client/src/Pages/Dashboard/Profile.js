@@ -14,10 +14,10 @@ export const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (!name || !email || !location || !lastname) {
-    //   displayAlert();
-    //   return;
-    // }
+    if (!name || !email || !location || !lastname) {
+      displayAlert();
+      return;
+    }
     updateUser({ name, email, lastname, location });
   };
   return (
