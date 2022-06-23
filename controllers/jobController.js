@@ -14,7 +14,10 @@ const createJob = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ job });
 };
 const getJobs = async (req, res) => {
-  res.send("all jobs");
+  const jobs = await Jobs.find({ createdBy: req.user.userId });
+  res
+    .status(StatusCodes.OK)
+    .json({ jobs, totalJobs: jobs.length, noOfPages: 1 });
 };
 const showStats = async (req, res) => {
   res.send("here are stats");
