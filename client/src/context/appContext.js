@@ -14,6 +14,11 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
+  CREATE_JOB_BEGIN,
+  CREATE_JOB_SUCCESS,
+  CREATE_JOB_ERROR,
 } from "./actions";
 import { reducer } from "./reducer";
 
@@ -30,8 +35,16 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: location ? location : "",
-  jobLocation: location ? location : "",
   showSidebar: false,
+  isEditing: false,
+  editJobId: "",
+  position: "",
+  company: "",
+  jobLocation: location ? location : "",
+  jobTypeOptions: ["part-time", "full-time", "internship", "trainee"],
+  jobType: "full-time",
+  statusOptions: ["pending", "interview", "declined"],
+  status: "pending",
 };
 
 const AppContext = React.createContext();
@@ -168,6 +181,42 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  //HANDLE-CHANGE FUNCTION
+  const handleChange = ({ objectKey, objectValue }) => {
+    dispatch({ type: HANDLE_CHANGE, payload: { objectKey, objectValue } });
+  };
+
+  //CREATE JOB
+  const createJob = async () => {
+    dispatch({ type: CREATE_JOB_BEGIN });
+    try {
+      const { position, company, jobType, status, jobLocation } = state;
+      const newJob = await authFetch.post("/jobs", {
+        position,
+        company,
+        jobType,
+        status,
+        jobLocation,
+      });
+      console.log(newJob);
+      dispatch({ type: CREATE_JOB_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      else {
+        dispatch({
+          type: CREATE_JOB_ERROR,
+          payload: { msg: error.response.data.msg },
+        });
+      }
+    }
+    clearAlert();
+  };
+
+  //CLEAR VALUES
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES });
+  };
   //ALERTS
   const clearAlert = () => {
     setTimeout(() => {
@@ -196,6 +245,9 @@ const AppProvider = ({ children }) => {
         toggleSidebar,
         logoutUser,
         updateUser,
+        handleChange,
+        clearValues,
+        createJob,
       }}
     >
       {children}
