@@ -21,13 +21,18 @@ export const AddJob = () => {
     handleChange,
     clearValues,
     createJob,
+    editJob,
   } = useAppContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (!position || !jobLocation || !company) {
-    //   displayAlert();
-    // }
+    if (!position || !jobLocation || !company) {
+      displayAlert();
+    }
+    if (isEditing) {
+      editJob();
+      return;
+    }
     createJob();
   };
   const handleInput = (e) => {

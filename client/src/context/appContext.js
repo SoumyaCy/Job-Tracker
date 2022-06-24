@@ -21,6 +21,7 @@ import {
   CREATE_JOB_ERROR,
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
+  SET_EDIT_JOB,
 } from "./actions";
 import { reducer } from "./reducer";
 
@@ -239,12 +240,20 @@ const AppProvider = ({ children }) => {
 
   //SET EDIT
   const setEditJob = (id) => {
+    dispatch({ type: SET_EDIT_JOB, payload: { id } });
     console.log(`the job to be edit is : ${id}`);
   };
+
+  //EDIT JOB
+  const editJob = () => {
+    console.log("job edited");
+  };
+
   //SET DELETE
   const setDeleteJob = (id) => {
     console.log(`the job to be deleted is : ${id}`);
   };
+
   //CLEAR VALUES
   const clearValues = () => {
     dispatch({ type: CLEAR_VALUES });
@@ -283,6 +292,7 @@ const AppProvider = ({ children }) => {
         getJobs,
         setEditJob,
         setDeleteJob,
+        editJob,
       }}
     >
       {children}

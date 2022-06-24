@@ -19,6 +19,7 @@ import {
   CREATE_JOB_ERROR,
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
+  SET_EDIT_JOB,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -174,6 +175,19 @@ export const reducer = (state, action) => {
         jobs: action.payload.jobs,
         totalJobs: action.payload.totalJobs,
         noOfPages: action.payload.noOfPages,
+      };
+    case SET_EDIT_JOB:
+      const job = state.jobs.find((job) => job._id === action.payload.id);
+      const { position, company, status, jobType, _id, jobLocation } = job;
+      return {
+        ...state,
+        isEditing: true,
+        editJobId: _id,
+        position,
+        company,
+        status,
+        jobType,
+        jobLocation,
       };
     default:
       throw new Error(`no such action: ${action.type}`);
