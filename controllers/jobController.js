@@ -23,7 +23,25 @@ const showStats = async (req, res) => {
   res.send("here are stats");
 };
 const updateJob = async (req, res) => {
-  res.send("job updated");
+  const { id: jobId } = req.params;
+
+  const { position, company } = req.body;
+
+  if (!position || !company) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const job = await Jobs.findOne({ _id: jobId });
+  if (!job) {
+    throw new NotFoundError(`no job found with id ${jobId}`);
+  }
+
+  const updatedJob = await Jobs.findOneAndUpdate({ _id: jobId }, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(StatusCodes.OK).json({ updatedJob });
 };
 const deleteJob = async (req, res) => {
   res.send("job deleted");
