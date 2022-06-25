@@ -22,6 +22,10 @@ import {
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
   SET_EDIT_JOB,
+  DELETE_JOB_BEGIN,
+  EDIT_JOB_BEGIN,
+  EDIT_JOB_SUCCESS,
+  EDIT_JOB_ERROR,
 } from "./actions";
 import { reducer } from "./reducer";
 
@@ -245,13 +249,39 @@ const AppProvider = ({ children }) => {
   };
 
   //EDIT JOB
-  const editJob = () => {
-    console.log("job edited");
+  const editJob = async () => {
+    dispatch({ type: EDIT_JOB_BEGIN });
+    try {
+      const { position, company, status, jobType, jobLocation } = state;
+      await authFetch.patch(`/jobs/${state.editJobId}`, {
+        position,
+        company,
+        status,
+        jobType,
+        jobLocation,
+      });
+      dispatch({ type: EDIT_JOB_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
   };
 
-  //SET DELETE
-  const setDeleteJob = (id) => {
-    console.log(`the job to be deleted is : ${id}`);
+  // DELETE JOB
+  const setDeleteJob = async (jobId) => {
+    dispatch({ type: DELETE_JOB_BEGIN });
+    try {
+      await authFetch.delete(`/jobs/${jobId}`);
+      getJobs();
+    } catch (error) {
+      logoutUser();
+    }
+    // console.log(`the job to be deleted is : ${jobId}`);
   };
 
   //CLEAR VALUES
