@@ -1,6 +1,7 @@
 const Jobs = require("../models/job-model");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../Errors");
+const { checkPermissions } = require("../utils/CheckPermissions");
 
 const createJob = async (req, res) => {
   const { position, company } = req.body;
@@ -36,6 +37,8 @@ const updateJob = async (req, res) => {
     throw new NotFoundError(`no job found with id ${jobId}`);
   }
 
+  checkPermissions(req.user, job.createdBy);
+
   const updatedJob = await Jobs.findOneAndUpdate({ _id: jobId }, req.body, {
     new: true,
     runValidators: true,
@@ -44,7 +47,17 @@ const updateJob = async (req, res) => {
   res.status(StatusCodes.OK).json({ updatedJob });
 };
 const deleteJob = async (req, res) => {
-  res.send("job deleted");
+  const { id: jobId } = req.params;
+
+  const job = await Jobs.findOne({ _id: jobId });
+  if (!job) {
+    throw new NotFoundError(`no job found with id ${jobId}`);
+  }
+
+  checkPermissions(req.user, job.createdBy);
+  await job.remove();
+
+  res.status(StatusCodes.OK).json({ msg: "job deleted" });
 };
 
 module.exports = { getJobs, createJob, showStats, updateJob, deleteJob };
