@@ -24,6 +24,8 @@ import {
   EDIT_JOB_BEGIN,
   EDIT_JOB_SUCCESS,
   EDIT_JOB_ERROR,
+  SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -218,6 +220,18 @@ export const reducer = (state, action) => {
         showAlert: true,
         alertText: action.payload.msg,
         alertType: "danger",
+      };
+    case SHOW_STATS_BEGIN:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case SHOW_STATS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        stats: action.payload.stats,
+        monthlyApplications: action.payload.monthlyApplications,
       };
     default:
       throw new Error(`no such action: ${action.type}`);

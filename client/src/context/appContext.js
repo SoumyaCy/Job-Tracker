@@ -26,6 +26,8 @@ import {
   EDIT_JOB_BEGIN,
   EDIT_JOB_SUCCESS,
   EDIT_JOB_ERROR,
+  SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
 } from "./actions";
 import { reducer } from "./reducer";
 
@@ -56,6 +58,8 @@ const initialState = {
   totalJobs: 0,
   noOfPages: 1,
   page: 1,
+  stats: {},
+  monthlyApplications: [],
 };
 
 const AppContext = React.createContext();
@@ -284,6 +288,25 @@ const AppProvider = ({ children }) => {
     // console.log(`the job to be deleted is : ${jobId}`);
   };
 
+  //FETCH STATS
+  const fetchStats = async () => {
+    dispatch({ type: SHOW_STATS_BEGIN });
+    try {
+      const { data } = await authFetch("/jobs/stats");
+      dispatch({
+        type: SHOW_STATS_SUCCESS,
+        payload: {
+          stats: data.defaultStats,
+          monthlyApplications: data.monthlyApplications,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      // logoutUser()
+    }
+    clearAlert();
+  };
+
   //CLEAR VALUES
   const clearValues = () => {
     dispatch({ type: CLEAR_VALUES });
@@ -323,6 +346,7 @@ const AppProvider = ({ children }) => {
         setEditJob,
         setDeleteJob,
         editJob,
+        fetchStats,
       }}
     >
       {children}

@@ -1,5 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { StatsContainer } from "../../components/StatsContainer";
+import { useAppContext } from "../../context/appContext";
 
 export const Stats = () => {
-  return <div>Stats Page</div>;
+  const { isLoading, monthlyApplications, fetchStats } = useAppContext();
+  useEffect(() => {
+    fetchStats();
+  }, []);
+
+  return (
+    <div>
+      <StatsContainer />
+    </div>
+  );
 };
