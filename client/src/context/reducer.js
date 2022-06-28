@@ -27,6 +27,7 @@ import {
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
+  CHANGE_PAGE,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -135,6 +136,7 @@ export const reducer = (state, action) => {
     case HANDLE_CHANGE:
       return {
         ...state,
+        page: 1,
         [action.payload.objectKey]: action.payload.objectValue,
       };
     case CLEAR_VALUES:
@@ -242,6 +244,11 @@ export const reducer = (state, action) => {
         searchStatus: "all",
         searchJobType: "all",
         sort: "latest",
+      };
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        page: action.payload.page,
       };
     default:
       throw new Error(`no such action: ${action.type}`);

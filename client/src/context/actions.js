@@ -39,3 +39,5 @@ export const EDIT_JOB_ERROR = "EDIT_JOB_ERROR";
 
 export const SHOW_STATS_BEGIN = "SHOW_STATS_BEGIN";
 export const SHOW_STATS_SUCCESS = "SHOW_STATS_SUCCESS";
+
+export const CHANGE_PAGE = "CHANGE_PAGE";

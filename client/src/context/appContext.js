@@ -29,6 +29,7 @@ import {
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
+  CHANGE_PAGE,
 } from "./actions";
 import { reducer } from "./reducer";
 
@@ -236,8 +237,8 @@ const AppProvider = ({ children }) => {
 
   //GET ALL JOBS
   const getJobs = async () => {
-    const { search, searchStatus, searchJobType, sort } = state;
-    let url = `/jobs?status=${searchStatus}&jobType=${searchJobType}&sort=${sort}`;
+    const { search, searchStatus, searchJobType, sort, page } = state;
+    let url = `/jobs?page=${page}&status=${searchStatus}&jobType=${searchJobType}&sort=${sort}`;
 
     if (search) {
       url = url + `&search=${search}`;
@@ -268,6 +269,12 @@ const AppProvider = ({ children }) => {
   const setEditJob = (id) => {
     dispatch({ type: SET_EDIT_JOB, payload: { id } });
     // console.log(`the job to be edit is : ${id}`);
+  };
+
+  //CHANGE PAGE
+  const changePage = (page) => {
+    console.log(page);
+    dispatch({ type: CHANGE_PAGE, payload: { page } });
   };
 
   //EDIT JOB
@@ -366,6 +373,7 @@ const AppProvider = ({ children }) => {
         editJob,
         fetchStats,
         clearFilters,
+        changePage,
       }}
     >
       {children}
