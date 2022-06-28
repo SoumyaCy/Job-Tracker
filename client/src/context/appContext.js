@@ -28,6 +28,7 @@ import {
   EDIT_JOB_ERROR,
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
+  CLEAR_FILTERS,
 } from "./actions";
 import { reducer } from "./reducer";
 
@@ -57,6 +58,11 @@ const initialState = {
   jobs: [],
   totalJobs: 0,
   noOfPages: 1,
+  search: "",
+  searchStatus: "all",
+  searchJobType: "all",
+  sort: "latest",
+  sortOptions: ["latest", "oldest", "a-z", "z-a"],
   page: 1,
   stats: {},
   monthlyApplications: [],
@@ -230,7 +236,13 @@ const AppProvider = ({ children }) => {
 
   //GET ALL JOBS
   const getJobs = async () => {
-    let url = `/jobs`;
+    const { search, searchStatus, searchJobType, sort } = state;
+    let url = `/jobs?status=${searchStatus}&jobType=${searchJobType}&sort=${sort}`;
+
+    if (search) {
+      url = url + `&search=${search}`;
+    }
+
     dispatch({ type: GET_JOBS_BEGIN });
     try {
       const { data } = await authFetch(url);
@@ -246,10 +258,16 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  //CLEAR FILTER
+  const clearFilters = () => {
+    dispatch({ type: CLEAR_FILTERS });
+    // console.log("clear filters");
+  };
+
   //SET EDIT
   const setEditJob = (id) => {
     dispatch({ type: SET_EDIT_JOB, payload: { id } });
-    console.log(`the job to be edit is : ${id}`);
+    // console.log(`the job to be edit is : ${id}`);
   };
 
   //EDIT JOB
@@ -347,6 +365,7 @@ const AppProvider = ({ children }) => {
         setDeleteJob,
         editJob,
         fetchStats,
+        clearFilters,
       }}
     >
       {children}

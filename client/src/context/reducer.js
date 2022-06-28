@@ -26,6 +26,7 @@ import {
   EDIT_JOB_ERROR,
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
+  CLEAR_FILTERS,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -232,6 +233,15 @@ export const reducer = (state, action) => {
         isLoading: false,
         stats: action.payload.stats,
         monthlyApplications: action.payload.monthlyApplications,
+      };
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        isLoading: false,
+        search: "",
+        searchStatus: "all",
+        searchJobType: "all",
+        sort: "latest",
       };
     default:
       throw new Error(`no such action: ${action.type}`);

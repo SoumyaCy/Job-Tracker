@@ -18,7 +18,7 @@ const createJob = async (req, res) => {
 };
 const getJobs = async (req, res) => {
   const { status, jobType, search, sort } = req.query;
-  console.log(req.query);
+  // console.log(req.query);
 
   const queryObject = {
     createdBy: req.user.userId,
@@ -37,13 +37,10 @@ const getJobs = async (req, res) => {
 
   switch (sort) {
     case "latest":
-      result = result.sort("createdAt");
-      break;
-    case "latest":
-      result = result.sort("createdAt");
+      result = result.sort("-createdAt");
       break;
     case "oldest":
-      result = result.sort("-createdAt");
+      result = result.sort("createdAt");
       break;
     case "a-z":
       result = result.sort("position");
