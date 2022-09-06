@@ -13,10 +13,10 @@ npm run install-dependencies
 ```sh
 npm start
 ```
-```sh
+
 - visit url http://localhost:3000/
-```
-#### Concurrently
+
+### Concurrently
 
 - front-end and backend (server)
 - run separate terminals
