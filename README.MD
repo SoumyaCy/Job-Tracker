@@ -8,7 +8,7 @@ npm run install-dependencies
 ```
 
 - add .env file
-- setup values for - MONGO_URL, JWT_SECRET, JWT_LIFETIME
+- setup values for -PORT Number, MONGO_URL, JWT_SECRET, JWT_LIFETIME(optional)
 
 ```sh
 npm start
