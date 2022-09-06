@@ -43,14 +43,19 @@ npm install concurrently --save-dev
 ```
 
 # Landing Page
-![image]("C:\Users\USER\Pictures\Screenshots\Screenshot (4).png")
+![Screenshot (4)](https://user-images.githubusercontent.com/56735635/188561265-5a7f2863-b20f-41be-819f-c9af749b4ebc.png)
 
 
 
 # Register Page
-![image]("C:\Users\USER\Pictures\Screenshots\Screenshot (5).png")
+![Screenshot (5)](https://user-images.githubusercontent.com/56735635/188560063-4ad2b060-5e6f-4dd2-9a17-bcbc05a52a1d.png)
 
 
 
 # Add Job Page
-![image]("C:\Users\USER\Pictures\Screenshots\Screenshot (6).png")
+![Screenshot (6)](https://user-images.githubusercontent.com/56735635/188560210-13e6fa2d-d746-42c4-a09b-32c1968a3ed0.png)
+
+
+# Stats Page
+![Screenshot (13)](https://user-images.githubusercontent.com/56735635/188595949-102c69dd-cd65-4b49-9630-9225dd711050.png)
+
