@@ -1,5 +1,30 @@
 # Job Hunter
-A web application to make your job search easier
+A React based web application to make your job search easier
+
+## Description
+
+This Application helps keep a track of upcoming Job applications. Equipped with a dashboard and personalized stats, one can keep track of their job applications,upcoming interviews, pending applications and monthly statistics.
+
+You can add your applications, update them, remove them and easily navigate through them, the applications takes care of managing the applications while the 
+user can focus on the upcoming jobs at hand.
+
+## Key Features
+* Login/Registration
+   * Upon opening the application,it takes us to a landing page
+   * From there we can go into the login/register page
+   * Create an account with us or login to an already existing one
+- Dashboard
+   - Upon logging in you can view your job statistics
+   - The pending applications,interviews and declined offers
+- Search Page
+  - Navigating through the job applications is easy and seemless
+  - Search and filter options provided can easily help the user search for the required application
+- Add/Update Job
+  - To add job one can enter the job details along with the current status of the application
+  - One can edit the job at any time by following the edit job button on each job
+- Profile Page
+  -User can create their own personal profile
+ 
 
 ### Local Installation & Set Up
 
