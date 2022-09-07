@@ -23,7 +23,7 @@ user can focus on the upcoming jobs at hand.
   - To add job one can enter the job details along with the current status of the application
   - One can edit the job at any time by following the edit job button on each job
 - Profile Page
-  -User can create their own personal profile
+  - User can create their own personal profile
  
 
 ### Local Installation & Set Up
