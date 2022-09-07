@@ -17,7 +17,7 @@ user can focus on the upcoming jobs at hand.
    - Upon logging in you can view your job statistics
    - The pending applications,interviews and declined offers
 - Search Page
-  - Navigating through the job applications is easy and seemless
+  - Navigating through the job applications is easy and seamless
   - Search and filter options provided can easily help the user search for the required application
 - Add/Update Job
   - To add job one can enter the job details along with the current status of the application
